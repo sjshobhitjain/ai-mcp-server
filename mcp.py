@@ -1,14 +1,28 @@
 import threading
 import time
-from agents.logsentinel_agent import run_agent as run_logsentinel
-from agents.mdr_agent import run_agent as run_mdr
+import traceback
+
+print("✅ MCP Server starting...")
+
+try:
+    from agents.logsentinel_agent import run_agent as run_logsentinel
+    print("✅ Imported LogSentinel agent")
+except Exception as e:
+    print("❌ Failed to import LogSentinel agent:", e)
+    traceback.print_exc()
+
+try:
+    from agents.mdr_agent import run_agent as run_mdr
+    print("✅ Imported MDR agent")
+except Exception as e:
+    print("❌ Failed to import MDR agent:", e)
+    traceback.print_exc()
 
 def main():
-    print("🎛️ Starting MCP Server with 2 AI agents...")
+    print("🚀 Starting both agents...")
 
-    # Create threads for each agent
-    t1 = threading.Thread(target=run_logsentinel, name="LogSentinelAgent")
-    t2 = threading.Thread(target=run_mdr, name="MDRWatchdogAgent")
+    t1 = threading.Thread(target=run_logsentinel, name="LogSentinel")
+    t2 = threading.Thread(target=run_mdr, name="MDR")
 
     t1.start()
     t2.start()
@@ -17,8 +31,7 @@ def main():
         while True:
             time.sleep(10)
     except KeyboardInterrupt:
-        print("🛑 Shutting down MCP server.")
-        exit()
+        print("🛑 MCP Server shutting down.")
 
 if __name__ == "__main__":
     main()

@@ -1,0 +1,6 @@
+Jul 7 14:22:01 localhost sudo: user1 : TTY=pts/0 ; USER=root ; COMMAND=/bin/apt install nmap
+Jul 7 14:25:18 localhost useradd rogueuser
+Jul 7 14:30:02 localhost sudo: user2 : COMMAND=/usr/bin/python3 script.py
+Jul 7 14:33:15 localhost sshd[9999]: Invalid user attempt from 192.168.1.22
+Jul 7 14:22:01 localhost sudo: user1 : TTY=pts/0 ; USER=root ; COMMAND=/bin/apt install nmap
+Jul 7 15:12:44 localhost sudo: user3 : COMMAND=/usr/bin/nmap

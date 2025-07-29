@@ -39,6 +39,7 @@ Both agents are **enriched with real-time CVE (Common Vulnerabilities and Exposu
 --
 
 ## Architecture
+```bash
 +-------------------------+
 | MCP Server |
 +-------------------------+
@@ -54,7 +55,7 @@ v v
 v v
 
 Real-time CVE lookups using NVD & RedHat APIs
-
+```
 ---
 
 ## Installation
@@ -64,10 +65,12 @@ Real-time CVE lookups using NVD & RedHat APIs
 ```bash
 git clone https://github.com/YOUR_USERNAME/ai-mcp-server.git
 cd ai-mcp-server
+```
 
 ### 2. Install Python dependencies
+```bash
 pip install -r requirements.txt
-
+```
 
 ## Running the MCP Server
 python mcp.py
@@ -75,9 +78,9 @@ python mcp.py
 
 ## Testing
 Append a suspicious line to the log file:
-
+```bash
 echo "Jul 29 11:45:22 localhost sudo apt install nmap" >> logs/sample_syslog.log
-
+```
 
 ### Expected console output:
 🚨 [LogSentinel] Anomaly detected: Jul 29 11:45:22 localhost sudo apt install nmap

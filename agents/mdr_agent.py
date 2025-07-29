@@ -1,7 +1,8 @@
 import time
+from agents.cve_lookup import check_cves_for_tokens, extract_tokens_from_line
 
 def run_agent():
-    print("🛡️ MDR Watchdog agent running...")
+    print("🛡️ MDR Watchdog agent with CVE API checks starting...")
     log_path = "logs/sample_syslog.log"
     approved_apps = ["vim", "nano", "ls"]
 
@@ -14,13 +15,25 @@ def run_agent():
                 continue
 
             line_lower = line.lower()
+            flagged = False
 
             if "sudo" in line_lower:
                 print("⚠️ [MDR] SUDO usage detected:", line.strip())
+                flagged = True
             if "useradd" in line_lower or "adduser" in line_lower:
                 print("⚠️ [MDR] New user creation:", line.strip())
+                flagged = True
             if "install" in line_lower:
                 if not any(app in line_lower for app in approved_apps):
                     print("⚠️ [MDR] Unknown software install:", line.strip())
+                    flagged = True
             if any(app in line_lower for app in ["nmap", "wireshark", "tcpdump"]):
                 print("⚠️ [MDR] Unapproved app launched:", line.strip())
+                flagged = True
+
+            if flagged:
+                tokens = extract_tokens_from_line(line)
+                cve_results = check_cves_for_tokens(tokens)
+                if cve_results:
+                    for software, cves in cve_results.items():
+                        print(f"⚠️ [CVE Alert] {software} has known CVEs: {', '.join(cves)}")

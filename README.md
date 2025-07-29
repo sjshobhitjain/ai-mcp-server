@@ -73,8 +73,9 @@ pip install -r requirements.txt
 ```
 
 ## Running the MCP Server
+```bash
 python mcp.py
-
+```
 
 ## Testing
 Append a suspicious line to the log file:
@@ -83,13 +84,15 @@ echo "Jul 29 11:45:22 localhost sudo apt install nmap" >> logs/sample_syslog.log
 ```
 
 ### Expected console output:
+```bash
 🚨 [LogSentinel] Anomaly detected: Jul 29 11:45:22 localhost sudo apt install nmap
 ⚠️ [CVE Alert] nmap has known CVEs: CVE-2023-12345
 ⚠️ [MDR] SUDO usage detected: Jul 29 11:45:22 localhost sudo apt install nmap
 ⚠️ [CVE Alert] nmap has known CVEs: CVE-2023-12345
-
+```
 
 ## Project Structure
+```bash
 ai-mcp-server/
 ├── agents/
 │   ├── logsentinel_agent.py  # Anomaly detection agent
@@ -98,6 +101,7 @@ ai-mcp-server/
 ├── logs/
 │   └── sample_syslog.log
 └── mcp.py                    # Main script that runs both agents
+```
 
 
 

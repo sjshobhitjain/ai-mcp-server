@@ -33,12 +33,13 @@ Both agents are **enriched with real-time CVE (Common Vulnerabilities and Exposu
   - [NVD API](https://services.nvd.nist.gov/rest/json/cves/2.0)
   - [RedHat Security Data API](https://access.redhat.com/labs/securitydataapi)
 - Example output:
-
+```bash
 [CVE Alert] nmap has known CVEs: CVE-2023-12345, CVE-2021-9876
-
---
+```
+---
 
 ## Architecture - TBD
+This section is in-progress. Stay tuned
 
 ---
 

@@ -38,24 +38,8 @@ Both agents are **enriched with real-time CVE (Common Vulnerabilities and Exposu
 
 --
 
-## Architecture
-```bash
-+-------------------------+
-| MCP Server |
-+-------------------------+
-| |
-| |
-v v
-+-----------------+ +------------------+
-| LogSentinel AI | | MDR Watchdog |
-| (Anomaly-based) | | (Rule-based) |
-+-----------------+ +------------------+
-| |
-| |
-v v
+## Architecture - TBD
 
-Real-time CVE lookups using NVD & RedHat APIs
-```
 ---
 
 ## Installation

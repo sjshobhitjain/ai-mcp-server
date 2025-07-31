@@ -1,3 +1,5 @@
+from notify import send_email_alert
+
 import time
 from sklearn.ensemble import IsolationForest
 from sklearn.feature_extraction.text import CountVectorizer
@@ -29,11 +31,25 @@ def run_agent():
             pred = model.predict(X_new)[0]
 
             if pred == -1:  # anomaly detected
-                print("🚨 [LogSentinel] Anomaly detected:", line.strip())
+    print("🚨 [LogSentinel] Anomaly detected:", line.strip())
+    tokens = extract_tokens_from_line(line)
+    cve_results = check_cves_for_tokens(tokens)
 
-                # Extract tokens and check CVEs
-                tokens = extract_tokens_from_line(line)
-                cve_results = check_cves_for_tokens(tokens)
-                if cve_results:
-                    for software, cves in cve_results.items():
-                        print(f"⚠️ [CVE Alert] {software} has known CVEs: {', '.join(cves)}")
+    # Risk scoring
+    base_risk = 60
+    risk_score = base_risk + (10 * len(cve_results))
+    impact = "Potential system misbehavior or compromise."
+    resolution = "Investigate the log entry and patch software if CVEs exist."
+
+    # Send email
+    send_email_alert(
+        agent="LogSentinel AI",
+        event=line.strip(),
+        risk_score=risk_score,
+        impact=impact,
+        resolution_steps=resolution
+    )
+
+    if cve_results:
+        for software, cves in cve_results.items():
+            print(f"⚠️ [CVE Alert] {software} has known CVEs: {', '.join(cves)}")

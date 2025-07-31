@@ -1,5 +1,6 @@
 import time
 from agents.cve_lookup import check_cves_for_tokens, extract_tokens_from_line
+from notify import send_email_alert
 
 def run_agent():
     print("🛡️ MDR Watchdog agent with CVE API checks starting...")
@@ -32,8 +33,25 @@ def run_agent():
                 flagged = True
 
             if flagged:
-                tokens = extract_tokens_from_line(line)
-                cve_results = check_cves_for_tokens(tokens)
-                if cve_results:
-                    for software, cves in cve_results.items():
-                        print(f"⚠️ [CVE Alert] {software} has known CVEs: {', '.join(cves)}")
+    tokens = extract_tokens_from_line(line)
+    cve_results = check_cves_for_tokens(tokens)
+
+    # Risk scoring
+    base_risk = 70
+    if "sudo" in line_lower:
+        base_risk = 80
+    risk_score = base_risk + (10 * len(cve_results))
+    impact = "Potential privilege abuse or unauthorized system modification."
+    resolution = "Review sudo activity, validate users, and block unapproved software."
+
+    send_email_alert(
+        agent="MDR Watchdog",
+        event=line.strip(),
+        risk_score=risk_score,
+        impact=impact,
+        resolution_steps=resolution
+    )
+
+    if cve_results:
+        for software, cves in cve_results.items():
+            print(f"⚠️ [CVE Alert] {software} has known CVEs: {', '.join(cves)}")

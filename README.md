@@ -63,7 +63,7 @@ Both agents are enriched with:
           +-----------------------------------------------+
           | CVE Lookup + Email Notification               |
           +-----------------------------------------------+
-
+```
 ---
 
 ## Installation

@@ -130,7 +130,9 @@ ai-mcp-server/
 
 ```
 ## Tags
+```bash
 #AI #Cybersecurity #MCP #CVE #ThreatIntelligence #Python #EmailAlerts
+```
 ---
 ### Thank you for vising my project. Feedback welcome!
 
